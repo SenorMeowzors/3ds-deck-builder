@@ -8,6 +8,7 @@ var projectile = preload("res://projectile.tscn")
 @onready var cameraf = $fpv
 @onready var global = get_node("/root/GlobalVars")
 var hand = Array()
+var deck = Array()
 var activeCard = 0
 var hasDashed = false
 func _process(_delta):
@@ -73,7 +74,9 @@ func removeCard():
 func addCard(Card, Pickup):
 	if hand.size() < 4:
 		hand.append(Card.instantiate())
-		Pickup.queue_free()
+	else:
+		deck.append(Card.instantiate())
+	Pickup.queue_free()
 
 func _on_hp_on_death():
 	get_tree().change_scene_to_file("res://node_3d.tscn")
@@ -93,3 +96,6 @@ func _on_hp_take_dmg():
 
 func getHPNode():
 	return $HP
+
+func player():
+	pass

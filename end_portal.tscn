@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://bnlg3q87y70ok"]
+
+[ext_resource type="Script" path="res://end_portal.gd" id="1_gxe84"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7ji45"]
+height = 0.1
+radius = 1.9
+
+[sub_resource type="TorusMesh" id="TorusMesh_8s0e1"]
+inner_radius = 1.9
+outer_radius = 2.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f5lf3"]
+transparency = 4
+cull_mode = 1
+albedo_color = Color(1, 0.290196, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_43f5c"]
+material = SubResource("StandardMaterial3D_f5lf3")
+top_radius = 1.85
+bottom_radius = 1.85
+height = 0.1
+
+[node name="EndPortal" type="Node3D"]
+script = ExtResource("1_gxe84")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_7ji45")
+
+[node name="Light" type="OmniLight3D" parent="."]
+light_color = Color(1, 0, 1, 1)
+light_energy = 16.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("TorusMesh_8s0e1")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_43f5c")
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="."]
+
+[connection signal="body_shape_entered" from="Area3D" to="." method="_on_area_3d_body_shape_entered"]

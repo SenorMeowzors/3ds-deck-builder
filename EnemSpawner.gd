@@ -44,6 +44,7 @@ func on_enem_death(x, y, z):
 func on_boss_death(x, y , z):
 	upgradeSpawner.spawnUpgrade(x, y, z)
 	won = true
+	$"..".spawnEnd(x, y, z)
 
 func spawn_boss():
 	var enem = boss.instantiate()
