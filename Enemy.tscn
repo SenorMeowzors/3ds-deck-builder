@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://ucq1aph8j4pn"]
+
+[ext_resource type="Script" path="res://Enemy.gd" id="1_7el6l"]
+[ext_resource type="PackedScene" uid="uid://dhhhc0afvu644" path="res://hp.tscn" id="2_p2hkx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0ydvp"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_lfkk1"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+script = ExtResource("1_7el6l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_0ydvp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_lfkk1")
+
+[node name="navigator" type="NavigationAgent3D" parent="."]
+
+[node name="HP" parent="." instance=ExtResource("2_p2hkx")]
+maxHP = 2
+
+[node name="AtkCooldown" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+
+[connection signal="onDeath" from="HP" to="." method="_on_hp_on_death"]
+[connection signal="timeout" from="AtkCooldown" to="." method="_on_atk_cooldown_timeout"]

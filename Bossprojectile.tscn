@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://blkb6hfdndbyi"]
+
+[ext_resource type="Script" path="res://bullet.gd" id="1_jwc86"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_x0pdc"]
+radius = 1.3
+height = 2.6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gr5co"]
+radius = 1.2
+
+[node name="bullet" type="Node3D"]
+script = ExtResource("1_jwc86")
+speed = 0.3
+pierce = 3
+ignoreWall = true
+dmg = 3
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_x0pdc")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_gr5co")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[connection signal="body_shape_entered" from="Area3D" to="." method="_on_area_3d_body_shape_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
