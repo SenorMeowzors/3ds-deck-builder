@@ -11,6 +11,14 @@ var hand = Array()
 var deck = Array()
 var activeCard = 0
 var hasDashed = false
+func _ready():
+	if !get_node("/root/GlobalVars").first:
+		deck = get_node("/root/GlobalVars").deck
+		while deck.size() > 0 and hand.size() < 5:
+			var ind = randi_range(0, deck.size() - 1)
+			hand.append(deck[ind])
+			deck.remove_at(ind)
+
 func _process(_delta):
 	if !get_node("../UI").isPaused:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

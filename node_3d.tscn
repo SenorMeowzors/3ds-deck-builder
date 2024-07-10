@@ -69,6 +69,7 @@ PC = NodePath("../PC")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.45815, 0)
 
 [node name="CardPickup" parent="." instance=ExtResource("4_wqrmn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.91001, 2.2117, 0)
 heldcard = ExtResource("5_s7rxv")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
