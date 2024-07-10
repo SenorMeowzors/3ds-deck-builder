@@ -1,11 +1,9 @@
-[gd_scene load_steps=24 format=3 uid="uid://c087l7ltwvq5r"]
+[gd_scene load_steps=22 format=3 uid="uid://c087l7ltwvq5r"]
 
 [ext_resource type="Script" path="res://Pause.gd" id="1_ibp8b"]
 [ext_resource type="PackedScene" uid="uid://cof1cf5gtmex" path="res://PlayerCharacter.tscn" id="1_scl8b"]
 [ext_resource type="PackedScene" uid="uid://evn2lqlfdcgv" path="res://UI.tscn" id="1_tcpay"]
 [ext_resource type="Texture2D" uid="uid://be8hjrp42g206" path="res://Free_pixel_tiles_pack/cobblestone_3.png" id="3_e1dy4"]
-[ext_resource type="PackedScene" uid="uid://bill4hihgcgko" path="res://card_pickup.tscn" id="4_wqrmn"]
-[ext_resource type="PackedScene" uid="uid://bdq7fxo07dbuf" path="res://charge_proj_card.tscn" id="5_s7rxv"]
 [ext_resource type="Script" path="res://EnemSpawner.gd" id="12_f3dck"]
 [ext_resource type="Script" path="res://UpgradeSpawner.gd" id="13_3mcwk"]
 
@@ -67,10 +65,6 @@ PC = NodePath("../PC")
 
 [node name="PC" parent="." instance=ExtResource("1_scl8b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.45815, 0)
-
-[node name="CardPickup" parent="." instance=ExtResource("4_wqrmn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.91001, 2.2117, 0)
-heldcard = ExtResource("5_s7rxv")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tflw2")

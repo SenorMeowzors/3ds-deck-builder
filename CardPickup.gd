@@ -5,8 +5,8 @@ extends Node3D
 var grounded = false
 var started = false
 var midHeight
-var Cycle100 = 0.25
-# Called when the node enters the scene tree for the first time.
+var Cycle100 = 0.0
+
 func _ready():
 	var temp = heldcard.instantiate()
 	midHeight = position.y
@@ -16,8 +16,8 @@ func _ready():
 func _on_area_3d_body_shape_entered(_body_rid, body, _body_shape_index, _local_shape_index):
 	if (body.has_method("addCard")):
 		body.addCard(heldcard, self)
-func _process(delta):
 
+func _process(delta):
 	rotation.y += delta
 	Cycle100 += delta * 30
 	if grounded:
@@ -34,4 +34,3 @@ func _process(delta):
 		if $RayCast3D.is_colliding():
 			grounded = true
 			midHeight = position.y
-			print(midHeight)

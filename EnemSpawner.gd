@@ -1,7 +1,7 @@
 extends Node3D
 
-var enemy = preload("res://EnemyFly.tscn")
-var boss = preload("res://Boss.tscn")
+@export var enemyList = [preload("res://Enemy.tscn"), preload("res://EnemyFly.tscn")]
+@export var bossList = [preload("res://Boss.tscn")]
 @onready var spawns = get_node("../Spawns").get_children()
 @onready var upgradeSpawner = $"../UpgradeSpawner"
 signal enemDeath
@@ -18,7 +18,7 @@ func _process(_delta):
 	pass
 
 func spawn_enem():
-	var enem = enemy.instantiate()
+	var enem = enemyList[randi_range(0, enemyList.size() - 1)].instantiate()
 	enem.position = spawns[(randi() % spawns.size())].position
 	enem.target = $"../PC"
 	enem.onDeath.connect(on_enem_death)
@@ -49,7 +49,7 @@ func on_boss_death(x, y , z):
 	get_node("/root/GlobalVars").addScore(10)
 
 func spawn_boss():
-	var enem = boss.instantiate()
+	var enem = bossList[randi_range(0, bossList.size() - 1)].instantiate()
 	enem.position = spawns[(randi() % spawns.size())].position
 	enem.target = $"../PC"
 	enem.onDeath.connect(on_boss_death)
