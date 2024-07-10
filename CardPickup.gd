@@ -26,11 +26,30 @@ func _process(delta):
 		if BobCurve and started:
 			position.y = midHeight + (BobCurve.sample(Cycle100 / 100) * .15)
 		else:
-			while abs(position.y - (midHeight + (BobCurve.sample(Cycle100 / 100) * .15))) > .005:
-				Cycle100 += .01
+			var kval = Cycle100
+			var stay = true
+			if position.y > midHeight + (BobCurve.sample(Cycle100 / 100) * .15):
+				while stay:
+					Cycle100 += .01
+					if Cycle100 > 100:
+						Cycle100 = 0.0
+					if Cycle100 == kval:
+						stay = false
+					if position.y > midHeight + (BobCurve.sample(Cycle100 / 100) * .15):
+						stay = false
+			else:
+				while stay:
+					Cycle100 += .01
+					if Cycle100 > 100:
+						Cycle100 = 0.0
+					if Cycle100 == kval:
+						stay = false
+					if position.y < midHeight + (BobCurve.sample(Cycle100 / 100) * .15):
+						stay = false
+			Cycle100 -= .01
 			started = true
 	else:
-		position.y -= delta * 2
+		position.y -= delta * 3
 		if $RayCast3D.is_colliding():
 			grounded = true
 			midHeight = position.y

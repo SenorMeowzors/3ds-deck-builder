@@ -11,8 +11,9 @@ func _process(_delta):
 
 func spawnEnd(x, y, z):
 	var portal = endPortal.instantiate()
-	portal.position = Vector3(x, y, z)
+	portal.position = Vector3(x, y , z)
 	portal.entered.connect(start_next_lvl)
+	add_child(portal)
 
 func start_next_lvl():
 	get_node("/root/GlobalVars").saveDeck($PC.deck)

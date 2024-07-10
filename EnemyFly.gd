@@ -28,7 +28,7 @@ func _physics_process(delta):
 		targetPos = target.global_position
 	direction = (targetPos - global_position).normalized()
 	if global_position.y < 10:
-		direction.y += .5
+		direction.y += 1
 	velocity = velocity.lerp(direction * speed, delta)
 func attack(Projectile: PackedScene) -> void:
 		var atk = Projectile.instantiate()
