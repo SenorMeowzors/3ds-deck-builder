@@ -27,7 +27,7 @@ func _process(delta):
 			position.y = midHeight + (BobCurve.sample(Cycle100 / 100) * .15)
 		else:
 			while abs(position.y - (midHeight + (BobCurve.sample(Cycle100 / 100) * .15))) > .005:
-				Cycle100 += delta
+				Cycle100 += .01
 			started = true
 	else:
 		position.y -= delta * 2
