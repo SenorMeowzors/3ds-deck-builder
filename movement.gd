@@ -11,6 +11,9 @@ var hand = Array()
 var deck = Array()
 var activeCard = 0
 var hasDashed = false
+var objTarget = Vector3.ZERO
+var objActive = false
+var canShoot = true
 func _ready():
 	if !get_node("/root/GlobalVars").first:
 		deck = get_node("/root/GlobalVars").deck
@@ -24,6 +27,11 @@ func _process(_delta):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _physics_process(delta):
+	if objActive:
+		$rotater/objPointer.set_visible(true)
+		$rotater/objPointer.look_at(objTarget)
+	else:
+		$rotater/objPointer.set_visible(false)
 	if not is_on_floor():
 		if hasDashed:
 			velocity.y -= gravity * delta * 3
@@ -43,8 +51,10 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	move_and_slide()
-	if Input.is_action_just_pressed("shoot") and !get_node("../UI").isPaused:
+	if Input.is_action_pressed("shoot") and !get_node("../UI").isPaused and canShoot:
 		attack(projectile)
+		canShoot = false
+		$shootTimer.start(.5)
 	
 	if Input.is_action_just_pressed("use_card") and !get_node("../UI").isPaused:
 		useCard()
@@ -66,6 +76,7 @@ func _input(event):
 	if event is InputEventMouseMotion and !get_node("../UI").isPaused:
 		rotation.y -= (event.relative.x * global.sens) / 100
 		cameraf.rotation.x -= (event.relative.y * global.sens) / 250
+		$rotater.rotation.x -= (event.relative.y * global.sens) / 250
 		
 func attack(Projectile: PackedScene) -> void:
 	var atk = Projectile.instantiate()
@@ -107,3 +118,7 @@ func getHPNode():
 
 func player():
 	pass
+
+
+func _on_shoot_timer_timeout():
+	canShoot = true # Replace with function body.

@@ -14,7 +14,6 @@ var leftArm = true
 signal onDeath(x, y, z)
 func _physics_process(delta):
 	# Add the gravity.
-	
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	var direction = Vector3.ZERO
@@ -22,6 +21,8 @@ func _physics_process(delta):
 	if !target:
 		return
 	look_at(target.global_position)
+	target.objTarget = global_position
+	target.objActive = true
 	rotation.x = 0
 	rotation.z = 0
 	if position.distance_to(target.global_position) < 25:
