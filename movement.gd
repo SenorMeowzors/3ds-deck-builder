@@ -119,6 +119,8 @@ func getHPNode():
 func player():
 	pass
 
+func getHP():
+	return $HP
 
 func _on_shoot_timer_timeout():
 	canShoot = true # Replace with function body.

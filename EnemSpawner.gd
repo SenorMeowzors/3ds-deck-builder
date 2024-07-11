@@ -6,7 +6,7 @@ extends Node3D
 @onready var upgradeSpawner = $"../UpgradeSpawner"
 signal enemDeath
 var deathsTillReward = 0
-var deathsTillBoss = 1
+var deathsTillBoss = 10
 var won = false
 var bossSpawned = false
 # Called when the node enters the scene tree for the first time.
