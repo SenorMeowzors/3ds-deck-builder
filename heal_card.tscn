@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cq4mppjv73877"]
+[gd_scene load_steps=3 format=3 uid="uid://cq4mppjv73877"]
 
 [ext_resource type="Script" path="res://Heal.gd" id="1_17wcj"]
+[ext_resource type="Texture2D" uid="uid://cjarsshdj2ru" path="res://heal_img.jpg" id="2_vwdje"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_17wcj")
+sprite = ExtResource("2_vwdje")
