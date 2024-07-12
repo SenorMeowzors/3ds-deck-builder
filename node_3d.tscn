@@ -1,11 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://c087l7ltwvq5r"]
+[gd_scene load_steps=23 format=3 uid="uid://c087l7ltwvq5r"]
 
 [ext_resource type="Script" path="res://Pause.gd" id="1_ibp8b"]
 [ext_resource type="PackedScene" uid="uid://cof1cf5gtmex" path="res://PlayerCharacter.tscn" id="1_scl8b"]
 [ext_resource type="PackedScene" uid="uid://evn2lqlfdcgv" path="res://UI.tscn" id="1_tcpay"]
 [ext_resource type="Texture2D" uid="uid://be8hjrp42g206" path="res://Free_pixel_tiles_pack/cobblestone_3.png" id="3_e1dy4"]
-[ext_resource type="PackedScene" uid="uid://bill4hihgcgko" path="res://card_pickup.tscn" id="4_dd7gl"]
-[ext_resource type="PackedScene" uid="uid://cq4mppjv73877" path="res://heal_card.tscn" id="5_b5f4g"]
 [ext_resource type="Script" path="res://EnemSpawner.gd" id="12_f3dck"]
 [ext_resource type="Script" path="res://UpgradeSpawner.gd" id="13_3mcwk"]
 
@@ -71,10 +69,6 @@ PC = NodePath("../PC")
 [node name="PC" parent="." instance=ExtResource("1_scl8b")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
 
-[node name="CardPickup" parent="." instance=ExtResource("4_dd7gl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3096, 2.59867, 0)
-heldcard = ExtResource("5_b5f4g")
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tflw2")
 camera_attributes = SubResource("CameraAttributesPractical_uuqen")
@@ -117,27 +111,27 @@ use_collision = true
 size = Vector3(200, 100, 1)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.3085, 2, 55.9989)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2, 52)
 use_collision = true
-size = Vector3(8.661, 5, 8.661)
+size = Vector3(2, 5, 2)
 material = SubResource("StandardMaterial3D_c4alq")
 
 [node name="CSGBox3D9" type="CSGBox3D" parent="NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.9705, 2, 55.9989)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 2, 52)
 use_collision = true
-size = Vector3(8.661, 5, 8.661)
+size = Vector3(2, 5, 2)
 material = SubResource("StandardMaterial3D_c4alq")
 
 [node name="CSGBox3D10" type="CSGBox3D" parent="NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.3085, 2, 37.3369)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 2, 40)
 use_collision = true
-size = Vector3(8.661, 5, 8.661)
+size = Vector3(2, 5, 2)
 material = SubResource("StandardMaterial3D_c4alq")
 
 [node name="CSGBox3D11" type="CSGBox3D" parent="NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.9705, 2, 37.3369)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37, 2, 40)
 use_collision = true
-size = Vector3(8.661, 5, 8.661)
+size = Vector3(2, 5, 2)
 material = SubResource("StandardMaterial3D_c4alq")
 
 [node name="Node3D2" type="Node3D" parent="NavigationRegion3D"]
@@ -162,7 +156,7 @@ material_override = SubResource("StandardMaterial3D_3ovlr")
 use_collision = true
 
 [node name="Node3D3" type="Node3D" parent="NavigationRegion3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31.6395, 0, 46.6679)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 0, 46)
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="NavigationRegion3D/Node3D3"]
 use_collision = true
@@ -225,28 +219,28 @@ autostart = true
 [node name="Spawns" type="Node" parent="."]
 
 [node name="Node3D" type="Node3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 37.353)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 37.353)
 
 [node name="Node3D2" type="Node3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -35.4757)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -35.476)
 
 [node name="Node3D3" type="Node3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.7478, 1, -35.4757)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.748, 2, -35.476)
 
 [node name="Node3D4" type="Node3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.7478, 1, 32.5641)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.748, 2, 32.564)
 
 [node name="Node3D5" type="Node3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.3396, 10.7754, 48.8968)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -33.34, 2, -17.217)
 
 [node name="Node3D6" type="Node3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.1603, 1, -3.84732)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.16, 2, -3.847)
 
 [node name="Node3D7" type="Node3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.2521, 1, -3.84732)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 34.252, 2, -3.847)
 
 [node name="Node3D8" type="Node3D" parent="Spawns"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.4191, 1, -31.4061)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.419, 2, -31.406)
 
 [node name="EnemSpawner" type="Node3D" parent="."]
 script = ExtResource("12_f3dck")
