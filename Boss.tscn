@@ -1,7 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cshs2fptujjj"]
+[gd_scene load_steps=10 format=3 uid="uid://cshs2fptujjj"]
 
 [ext_resource type="Script" path="res://Boss.gd" id="1_s7jvm"]
 [ext_resource type="PackedScene" uid="uid://dhhhc0afvu644" path="res://hp.tscn" id="2_bfuac"]
+[ext_resource type="AudioStream" uid="uid://ddgub0ya1hubr" path="res://RPG_Essentials_Free/8_Buffs_Heals_SFX/17_Def_buff_01.wav" id="3_701l7"]
+[ext_resource type="AudioStream" uid="uid://1yu1ajr808xv" path="res://RPG_Essentials_Free/10_Battle_SFX/03_Claw_03.wav" id="4_l4p6b"]
+[ext_resource type="AudioStream" uid="uid://bnf2qb8u1o117" path="res://RPG_Essentials_Free/10_Battle_SFX/69_Enemy_death_01.wav" id="5_53uto"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6koif"]
 
@@ -52,6 +55,15 @@ one_shot = true
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 mesh = SubResource("PrismMesh_u8cfa")
+
+[node name="SpawnNoise" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_701l7")
+
+[node name="AtkNoise" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_l4p6b")
+
+[node name="DeathNoise" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_53uto")
 
 [connection signal="timeout" from="AtkCooldown" to="." method="_on_atk_cooldown_timeout"]
 [connection signal="onDeath" from="HP" to="." method="_on_hp_on_death"]

@@ -12,6 +12,10 @@ var leftArm = true
 @onready var nav = $navigator
 @onready var atkCD = $AtkCooldown
 signal onDeath(x, y, z)
+
+func _ready():
+	$SpawnNoise.play()
+
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
@@ -38,18 +42,20 @@ func _physics_process(delta):
 	velocity = velocity.lerp(direction * speed, delta)
 	
 func attack(Projectile: PackedScene) -> void:
-		var atk = Projectile.instantiate()
-		if leftArm:
-			atk.position = $LeftArm.global_position
-			leftArm = false
-		else:
-			atk.position = $RightArm.global_position
-			leftArm = true
-		atk.set_dir((target.position - position).normalized(), false)
-		atk.maker = self
-		get_parent().add_child(atk)
+	$AtkNoise.play()
+	var atk = Projectile.instantiate()
+	if leftArm:
+		atk.position = $LeftArm.global_position
+		leftArm = false
+	else:
+		atk.position = $RightArm.global_position
+		leftArm = true
+	atk.set_dir((target.position - position).normalized(), false)
+	atk.maker = self
+	get_parent().add_child(atk)
 		
 func _on_hp_on_death():
+	$DeathNoise.play()
 	onDeath.emit(position.x, position.y, position.z)
 	queue_free() # Replace with function body.
 

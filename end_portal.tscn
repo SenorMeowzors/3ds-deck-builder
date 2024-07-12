@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://bnlg3q87y70ok"]
+[gd_scene load_steps=7 format=3 uid="uid://bnlg3q87y70ok"]
 
 [ext_resource type="Script" path="res://end_portal.gd" id="1_gxe84"]
+[ext_resource type="AudioStream" uid="uid://dc84fj2y8auai" path="res://RPG_Essentials_Free/8_Buffs_Heals_SFX/16_Atk_buff_04.wav" id="2_dcxld"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_7ji45"]
 height = 0.1
@@ -43,5 +44,8 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 mesh = SubResource("CylinderMesh_43f5c")
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="."]
+
+[node name="SpawnNoise" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_dcxld")
 
 [connection signal="body_shape_entered" from="Area3D" to="." method="_on_area_3d_body_shape_entered"]

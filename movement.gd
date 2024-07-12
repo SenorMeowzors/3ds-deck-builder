@@ -43,6 +43,8 @@ func _physics_process(delta):
 	var input_dir = Input.get_vector("left", "right", "forward", "backwards")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
+		if !$MoveNoise.playing:
+			$MoveNoise.play()
 		if abs(velocity.x) < SPEED:
 			velocity.x = direction.x * SPEED
 		if abs(velocity.z) < SPEED:
@@ -79,6 +81,7 @@ func _input(event):
 		$rotater.rotation.x -= (event.relative.y * global.sens) / 250
 		
 func attack(Projectile: PackedScene) -> void:
+	$ShootNoise.play()
 	var atk = Projectile.instantiate()
 	atk.position = position
 	atk.set_dir(-cameraf.get_global_transform().basis.z, true)
@@ -111,6 +114,7 @@ func useCard():
 		hand[activeCard].use(self)
 			
 func _on_hp_take_dmg():
+	$DmgNoise.play()
 	take_dmg.emit()
 
 func getHPNode():
@@ -118,9 +122,6 @@ func getHPNode():
 
 func player():
 	pass
-
-func getHP():
-	return $HP
 
 func _on_shoot_timer_timeout():
 	canShoot = true # Replace with function body.

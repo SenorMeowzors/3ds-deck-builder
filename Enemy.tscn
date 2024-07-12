@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ucq1aph8j4pn"]
+[gd_scene load_steps=8 format=3 uid="uid://ucq1aph8j4pn"]
 
 [ext_resource type="Script" path="res://Enemy.gd" id="1_7el6l"]
 [ext_resource type="PackedScene" uid="uid://dhhhc0afvu644" path="res://hp.tscn" id="2_p2hkx"]
+[ext_resource type="AudioStream" uid="uid://b1lg1rttp22k3" path="res://RPG_Essentials_Free/8_Atk_Magic_SFX/04_Fire_explosion_04_medium.wav" id="3_5fu4d"]
+[ext_resource type="AudioStream" uid="uid://ttpgv7k4fefi" path="res://RPG_Essentials_Free/10_Battle_SFX/22_Slash_04.wav" id="4_8jajj"]
+[ext_resource type="AudioStream" uid="uid://bnf2qb8u1o117" path="res://RPG_Essentials_Free/10_Battle_SFX/69_Enemy_death_01.wav" id="5_a7q42"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0ydvp"]
 
@@ -24,6 +27,15 @@ maxHP = 2
 [node name="AtkCooldown" type="Timer" parent="."]
 wait_time = 0.75
 one_shot = true
+
+[node name="SpawnNoise" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_5fu4d")
+
+[node name="AtkNoise" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_8jajj")
+
+[node name="DeathNoise" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_a7q42")
 
 [connection signal="onDeath" from="HP" to="." method="_on_hp_on_death"]
 [connection signal="timeout" from="AtkCooldown" to="." method="_on_atk_cooldown_timeout"]

@@ -2,7 +2,10 @@ extends Node3D
 
 signal entered()
 var player
-# Called when the node enters the scene tree for the first time.
+
+func _ready():
+	$SpawnNoise.play()
+
 func look():
 	if player:
 		look_at(player.position)

@@ -11,8 +11,11 @@ var canAttack = true
 var projectile = preload("res://projectile.tscn")
 @onready var atkCD = $AtkCooldown
 signal onDeath(x, y, z)
+
+func _ready():
+	$SpawnNoise.play()
+
 func _physics_process(delta):
-	# Add the gravity.
 	var direction = Vector3.ZERO
 	move_and_slide()
 	if !target:
@@ -31,13 +34,15 @@ func _physics_process(delta):
 		direction.y += 1
 	velocity = velocity.lerp(direction * speed, delta)
 func attack(Projectile: PackedScene) -> void:
-		var atk = Projectile.instantiate()
-		atk.position = position
-		atk.set_dir((target.position - position).normalized(), false)
-		atk.maker = self
-		get_parent().add_child(atk)
+	$AtkNoise.play()
+	var atk = Projectile.instantiate()
+	atk.position = position
+	atk.set_dir((target.position - position).normalized(), false)
+	atk.maker = self
+	get_parent().add_child(atk)
 		
 func _on_hp_on_death():
+	$DeathNoise.play()
 	onDeath.emit(position.x, position.y, position.z)
 	queue_free() # Replace with function body.
 
