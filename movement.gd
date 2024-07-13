@@ -15,10 +15,7 @@ var canShoot = true
 func _ready():
 	if !get_node("/root/GlobalVars").first:
 		deck = get_node("/root/GlobalVars").deck
-		while deck.size() > 0 and deck.size() < 5:
-			var ind = randi_range(0, deck.size() - 1)
-			deck.append(deck[ind])
-			deck.remove_at(ind)
+		deck.shuffle()
 
 func _process(_delta):
 	if !get_node("../UI").isPaused:
