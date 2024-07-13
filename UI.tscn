@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://evn2lqlfdcgv"]
+[gd_scene load_steps=9 format=3 uid="uid://evn2lqlfdcgv"]
 
 [ext_resource type="Script" path="res://Control.gd" id="1_cdwat"]
 [ext_resource type="Texture2D" uid="uid://bkjf4ie245w8h" path="res://Screen Overlay Effects/blurry Blood Smear Overlay V2.png" id="2_4y546"]
@@ -10,6 +10,9 @@
 [sub_resource type="Curve" id="Curve_o5hhy"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25, 0.5), 0.0, 0.0, 0, 0, Vector2(0.5, 0.75), 0.0, 0.0, 0, 0, Vector2(0.75, 0.9), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 5
+
+[sub_resource type="LabelSettings" id="LabelSettings_oh3bw"]
+font_size = 32
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -92,29 +95,14 @@ scale = Vector2(0.75, 0.75)
 layout_mode = 2
 script = ExtResource("4_srtr2")
 
-[node name="Card0" type="TextureRect" parent="Cards/Control"]
+[node name="Card" type="TextureRect" parent="Cards/Control"]
 layout_mode = 2
-offset_left = -224.0
+offset_left = -400.0
 offset_top = -310.0
-offset_right = -1.0
+offset_right = -177.0
 texture = ExtResource("5_uewqd")
 
-[node name="Uses" type="Sprite2D" parent="Cards/Control/Card0"]
-position = Vector2(32, -32)
-scale = Vector2(4, 4)
-texture = ExtResource("5_i3rbi")
-hframes = 4
-vframes = 4
-frame = 15
-
-[node name="Card1" type="TextureRect" parent="Cards/Control"]
-layout_mode = 2
-offset_left = -454.0
-offset_top = -310.0
-offset_right = -231.0
-texture = ExtResource("5_uewqd")
-
-[node name="Uses" type="Sprite2D" parent="Cards/Control/Card1"]
+[node name="Uses" type="Sprite2D" parent="Cards/Control/Card"]
 position = Vector2(32, -32)
 scale = Vector2(4, 4)
 texture = ExtResource("5_i3rbi")
@@ -123,36 +111,24 @@ vframes = 4
 frame = 15
 
 [node name="Card2" type="TextureRect" parent="Cards/Control"]
-layout_mode = 2
-offset_left = -681.0
-offset_top = -310.0
-offset_right = -458.0
+visible = false
+layout_mode = 0
+offset_left = -150.0
+offset_top = -186.0
+offset_right = 73.0
+offset_bottom = 124.0
+scale = Vector2(0.6, 0.6)
 texture = ExtResource("5_uewqd")
 
-[node name="Uses" type="Sprite2D" parent="Cards/Control/Card2"]
-position = Vector2(32, -32)
-scale = Vector2(4, 4)
-texture = ExtResource("5_i3rbi")
-hframes = 4
-vframes = 4
-frame = 15
-
-[node name="Card3" type="TextureRect" parent="Cards/Control"]
-layout_mode = 2
-offset_left = -908.0
-offset_top = -310.0
-offset_right = -685.0
-grow_horizontal = 0
-grow_vertical = 0
-texture = ExtResource("5_uewqd")
-
-[node name="Uses" type="Sprite2D" parent="Cards/Control/Card3"]
-position = Vector2(32, -32)
-scale = Vector2(4, 4)
-texture = ExtResource("5_i3rbi")
-hframes = 4
-vframes = 4
-frame = 15
+[node name="Label" type="Label" parent="Cards/Control/Card2"]
+custom_minimum_size = Vector2(224, 0)
+layout_mode = 0
+offset_top = -64.0
+offset_right = 224.0
+offset_bottom = -19.0
+text = "Next:"
+label_settings = SubResource("LabelSettings_oh3bw")
+horizontal_alignment = 1
 
 [node name="PauseMenu" type="MarginContainer" parent="."]
 visible = false

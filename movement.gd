@@ -7,9 +7,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var projectile = preload("res://projectile.tscn")
 @onready var cameraf = $fpv
 @onready var global = get_node("/root/GlobalVars")
-var hand = Array()
 var deck = Array()
-var activeCard = 0
 var hasDashed = false
 var objTarget = Vector3.ZERO
 var objActive = false
@@ -17,9 +15,9 @@ var canShoot = true
 func _ready():
 	if !get_node("/root/GlobalVars").first:
 		deck = get_node("/root/GlobalVars").deck
-		while deck.size() > 0 and hand.size() < 5:
+		while deck.size() > 0 and deck.size() < 5:
 			var ind = randi_range(0, deck.size() - 1)
-			hand.append(deck[ind])
+			deck.append(deck[ind])
 			deck.remove_at(ind)
 
 func _process(_delta):
@@ -60,16 +58,12 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("use_card") and !get_node("../UI").isPaused:
 		useCard()
+		deck.append(deck[0])
+		deck.remove_at(0)
 		
-	if Input.is_action_just_pressed("cycle_card_right") and !get_node("../UI").isPaused:
-		activeCard -= 1
-		if activeCard == -1:
-			activeCard = hand.size() - 1
-		
-	if Input.is_action_just_pressed("cycle_card_left") and !get_node("../UI").isPaused:
-		activeCard += 1
-		if activeCard == hand.size():
-			activeCard = 0
+	if Input.is_action_just_pressed("cycle_card") and !get_node("../UI").isPaused:
+		deck.append(deck[0])
+		deck.remove_at(0)
 	if velocity.y > JUMP_VELOCITY:
 		hasDashed = true
 	if abs(velocity.x) > SPEED or abs(velocity.z) > SPEED or velocity.y > JUMP_VELOCITY:
@@ -90,12 +84,11 @@ func attack(Projectile: PackedScene) -> void:
 	
 
 func removeCard():
-	hand.remove_at(activeCard)
-	activeCard = max(0, activeCard-1)
+	deck.remove_at(0)
 
 func addCard(Card, Pickup):
-	if hand.size() < 4:
-		hand.append(Card.instantiate())
+	if deck.size() < 4:
+		deck.append(Card.instantiate())
 	else:
 		deck.append(Card.instantiate())
 	Pickup.queue_free()
@@ -104,14 +97,12 @@ func _on_hp_on_death():
 	get_tree().change_scene_to_file("res://node_3d.tscn")
 
 func useCard():
-	if hand.size() == 0:
+	if deck.size() == 0:
 		return
-	if hand.size() <= activeCard:
+	if !deck[0]:
 		return
-	if !hand[activeCard]:
-		return
-	if hand[activeCard].has_method("use"):
-		hand[activeCard].use(self)
+	if deck[0].has_method("use"):
+		deck[0].use(self)
 			
 func _on_hp_take_dmg():
 	$DmgNoise.play()

@@ -2,18 +2,16 @@ extends Control
 
 
 @onready var PC = get_parent().get_parent().PC
-@onready var handC = [$Card0, $Card1, $Card2, $Card3]
 
 func _process(_delta):
-	if handC:
-		for i in handC:
-			i.set_texture(null)
-			i.get_child(0).set_frame(15)
-		for i in range(0, PC.hand.size()):
-
-			if PC.activeCard == i:
-				handC[i].position.y = -390
-			else:
-				handC[i].position.y = -310
-			handC[i].set_texture(PC.hand[i].sprite)
-			handC[i].get_child(0).set_frame(PC.hand[i].uses - 1)
+	$Card.set_texture(null)
+	$Card/Uses.set_frame(15)
+	if PC.deck.size() <= 0:
+		return
+	$Card.set_texture(PC.deck[0].sprite)
+	$Card/Uses.set_frame(PC.deck[0].uses - 1)
+	if PC.deck.size() <= 1:
+		$Card2.set_visible(false)
+		return
+	$Card2.set_visible(true)
+	$Card2.set_texture(PC.deck[1].sprite)

@@ -2,6 +2,7 @@ extends Node3D
 
 @onready var UI = $UI
 var endPortal = preload("res://end_portal.tscn")
+@export var ePLoc = Vector3(0, 2.5, 0)
 # Called when the node enters the scene tree for the first time.
 #func _ready():
 	#spawnEnd(20, 2.5, 10)
@@ -12,7 +13,7 @@ func _process(_delta):
 
 func spawnEnd(x, y, z):
 	var portal = endPortal.instantiate()
-	portal.position = Vector3(0, 2.5, 0)
+	portal.position = ePLoc
 	portal.entered.connect(start_next_lvl)
 	portal.player = $PC
 	portal.look()
