@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://bud7wcos4g1vp"]
+
+[ext_resource type="Script" path="res://DefaultProj_card.gd" id="1_v4f6v"]
+[ext_resource type="Texture2D" uid="uid://cxuhgeowcesrg" path="res://Screen Overlay Effects/lbolt.jpg" id="2_bm7il"]
+
+[node name="DefaultProj_card" type="Node3D"]
+script = ExtResource("1_v4f6v")
+sprite = ExtResource("2_bm7il")
+cardName = "Shoot"

@@ -6,6 +6,8 @@ var grounded = false
 var started = false
 var midHeight
 var Cycle100 = 0.0
+signal inRange(cardName)
+signal outRange
 
 func _ready():
 	var temp = heldcard.instantiate()
@@ -15,7 +17,15 @@ func _ready():
 
 func _on_area_3d_body_shape_entered(_body_rid, body, _body_shape_index, _local_shape_index):
 	if (body.has_method("addCard")):
-		body.addCard(heldcard, self)
+		inRange.emit(self, heldcard.instantiate().cardName)
+
+func _on_area_3d_body_shape_exited(_body_rid, body, _body_shape_index, _local_shape_index):
+	if (body.has_method("addCard")):
+		outRange.emit()
+
+func collect(player):
+	player.addCard(heldcard, self, heldcard.atk)
+	
 
 func _process(delta):
 	rotation.y += delta
@@ -53,3 +63,5 @@ func _process(delta):
 		if $RayCast3D.is_colliding():
 			grounded = true
 			midHeight = position.y
+
+

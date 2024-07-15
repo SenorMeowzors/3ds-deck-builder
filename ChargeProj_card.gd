@@ -17,7 +17,3 @@ func use(Player):
 		atk2.pVel.z += (randf_range(0.5, 2) * i.position.z)/250
 		atk2.maker = Player
 		Player.get_parent().add_child(atk2)
-	uses -= 1
-	if uses <= 0:
-		Player.removeCard()
-		queue_free()
