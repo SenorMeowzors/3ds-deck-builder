@@ -61,6 +61,10 @@ mesh = SubResource("PrismMesh_0jl51")
 wait_time = 0.5
 one_shot = true
 
+[node name="specTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [node name="MoveNoise" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_q6uel")
 
@@ -73,3 +77,4 @@ stream = ExtResource("5_y825q")
 [connection signal="onDeath" from="HP" to="." method="_on_hp_on_death"]
 [connection signal="takeDmg" from="HP" to="." method="_on_hp_take_dmg"]
 [connection signal="timeout" from="shootTimer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="timeout" from="specTimer" to="." method="_on_spec_timer_timeout"]

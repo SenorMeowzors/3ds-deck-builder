@@ -8,7 +8,6 @@ extends Control
 @onready var HPBar = $"Fullscreen Effects/HPBar"
 @onready var Health = $"Fullscreen Effects/HPBar/Health"
 var isPaused = false
-# Called when the node enters the scene tree for the first time.
 var dmgVal = 0
 
 func _ready():
@@ -41,8 +40,12 @@ func _on_resume_pressed():
 func _on_quit_pressed():
 	get_tree().quit()
 
+func pickup_in_range(cardName):
+	$"Fullscreen Effects/Pickup".set_text("Press " + InputMap.action_get_events("collect_card")[0].as_text() + " to pick up " + cardName)
+	$"Fullscreen Effects/Pickup".set_visible(true)
 
-
+func pickup_left_range():
+	$"Fullscreen Effects/Pickup".set_visible(false)
 
 func _on_opa_slider_value_changed(value):
 	globals.opa = value

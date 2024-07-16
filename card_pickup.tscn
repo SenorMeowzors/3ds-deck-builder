@@ -12,7 +12,7 @@ point_count = 3
 size = Vector3(1.1, 1.55, 0.05)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q3hp7"]
-size = Vector3(1.7, 2.2, 1)
+size = Vector3(2, 2.5, 1.5)
 
 [node name="CardPickup" type="Node3D"]
 script = ExtResource("1_ekdsj")
@@ -38,3 +38,4 @@ shape = SubResource("BoxShape3D_q3hp7")
 target_position = Vector3(0, -1.5, 0)
 
 [connection signal="body_shape_entered" from="Area3D" to="." method="_on_area_3d_body_shape_entered"]
+[connection signal="body_shape_exited" from="Area3D" to="." method="_on_area_3d_body_shape_exited"]

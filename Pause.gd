@@ -21,6 +21,7 @@ func spawnEnd(x, y, z):
 	
 
 func start_next_lvl():
-	get_node("/root/GlobalVars").saveDeck($PC.deck)
+	get_node("/root/GlobalVars").saveAtkDeck($PC.Atkdeck)
+	get_node("/root/GlobalVars").saveSpecDeck($PC.Specdeck)
 	get_node("/root/GlobalVars").first = false
 	get_tree().change_scene_to_file("res://node_3d.tscn")

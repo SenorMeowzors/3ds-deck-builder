@@ -78,7 +78,8 @@ func _physics_process(delta):
 		Specdeck.remove_at(0)
 		
 	if Input.is_action_just_pressed("collect_card") and !get_node("../UI").isPaused:
-		pass
+		if $"../UpgradeSpawner".cloCard:
+			$"../UpgradeSpawner".cloCard.collect(self)
 
 	if velocity.y > JUMP_VELOCITY:
 		hasDashed = true
@@ -102,11 +103,17 @@ func attack(Projectile: PackedScene) -> void:
 func removeCard(deck):
 	deck.remove_at(0)
 
-func addCard(Card, Pickup, deck):
-	if deck.size() < 4:
-		deck.append(Card.instantiate())
+func addCard(Card, Pickup, atk):
+	if atk:
+		if Atkdeck.size() < 4:
+			Atkdeck.append(Card.instantiate())
+		else:
+			Atkdeck.append(Card.instantiate())
 	else:
-		deck.append(Card.instantiate())
+		if Specdeck.size() < 4:
+			Specdeck.append(Card.instantiate())
+		else:
+			Specdeck.append(Card.instantiate())
 	Pickup.queue_free()
 
 func _on_hp_on_death():
@@ -117,10 +124,12 @@ func useCard(deck):
 		return
 	if !deck[0]:
 		return
-	if deck[0].has_method("use"):
-		deck[0].use(self)
-		if deck[0].fragile:
-			deck[0].queue_free()
+	var temp = deck[0]
+	if temp.has_method("use"):
+		temp.use(self)
+		if temp.fragile:
+			removeCard(deck)
+			temp.queue_free()
 			
 func _on_hp_take_dmg():
 	$DmgNoise.play()
@@ -134,3 +143,7 @@ func player():
 
 func _on_shoot_timer_timeout():
 	canShoot = true # Replace with function body.
+
+
+func _on_spec_timer_timeout():
+	canSpec = true # Replace with function body.

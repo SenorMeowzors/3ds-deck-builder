@@ -12,4 +12,4 @@ func _process(_delta):
 		$Card2.set_visible(false)
 		return
 	$Card2.set_visible(true)
-	$Card2.set_texture(PC.Specdeck[1].sprite)
+	$Card2.set_texture(PC.Specdeck[0].sprite)
