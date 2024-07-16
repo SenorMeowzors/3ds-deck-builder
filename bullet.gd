@@ -4,6 +4,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") / 100
 @export var speed = 0.5
 @export var pierce = 1
 @export var ignoreWall = false
+@export var slow = false
 var direction = Vector3.ZERO
 var velocityY = 0
 @export var dmg = 1
@@ -25,6 +26,8 @@ func _on_area_3d_body_shape_entered(_body_rid, body, _body_shape_index, _local_s
 	if body != maker and body not in ivl:
 		if body.has_node("HP"):
 			body.get_node("HP").take_dmg(dmg)
+			if slow:
+				body.take_slow(1)
 			pierce -= 1
 			ivl.append(body)
 			if pierce <= 0:

@@ -9,6 +9,7 @@ var hp = 2
 var canAttack = true
 var projectile = preload("res://Bossprojectile.tscn")
 var leftArm = true
+var isSlow = false
 @onready var nav = $navigator
 @onready var atkCD = $AtkCooldown
 signal onDeath(x, y, z)
@@ -40,6 +41,8 @@ func _physics_process(delta):
 		nav.set_target_position(target.global_position)
 	direction = (nav.get_next_path_position() - global_position).normalized()
 	velocity = velocity.lerp(direction * speed, delta)
+	if isSlow:
+		velocity = velocity.lerp(direction * speed * 0.5, delta)
 	
 func attack(Projectile: PackedScene) -> void:
 	$AtkNoise.play()
@@ -59,6 +62,16 @@ func _on_hp_on_death():
 	onDeath.emit(position.x, position.y, position.z)
 	queue_free() # Replace with function body.
 
+func take_slow(time):
+	$slowTimer.start(time)
+	isSlow = true
+	$regModel.set_visible(false)
+	$slowModel.set_visible(true)
+	
+func _on_slow_timer_timeout():
+	isSlow = false
+	$regModel.set_visible(true)
+	$slowModel.set_visible(false)
 
 func _on_atk_cooldown_timeout():
 	canAttack = true # Replace with function body.

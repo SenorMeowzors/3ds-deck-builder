@@ -45,7 +45,7 @@ func on_enem_death(x, y, z):
 func on_boss_death(x, y , z):
 	upgradeSpawner.spawnUpgrade(x, y, z)
 	won = true
-	$"..".spawnEnd(x, y, z)
+	$"..".spawnEnd()
 	get_node("/root/GlobalVars").addScore(10)
 
 func spawn_boss():

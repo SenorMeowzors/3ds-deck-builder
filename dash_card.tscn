@@ -5,6 +5,5 @@
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_hksr8")
-atk = false
 sprite = ExtResource("2_jr0lk")
 cardName = "Dash"

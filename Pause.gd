@@ -11,7 +11,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("Pause"):
 		UI.pauseMenu()
 
-func spawnEnd(x, y, z):
+func spawnEnd():
 	var portal = endPortal.instantiate()
 	portal.position = ePLoc
 	portal.entered.connect(start_next_lvl)

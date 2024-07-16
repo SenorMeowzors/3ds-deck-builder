@@ -74,7 +74,10 @@ stream = ExtResource("4_p78it")
 [node name="DmgNoise" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_y825q")
 
+[node name="slowTimer" type="Timer" parent="."]
+
 [connection signal="onDeath" from="HP" to="." method="_on_hp_on_death"]
 [connection signal="takeDmg" from="HP" to="." method="_on_hp_take_dmg"]
 [connection signal="timeout" from="shootTimer" to="." method="_on_shoot_timer_timeout"]
 [connection signal="timeout" from="specTimer" to="." method="_on_spec_timer_timeout"]
+[connection signal="timeout" from="slowTimer" to="." method="_on_slow_timer_timeout"]

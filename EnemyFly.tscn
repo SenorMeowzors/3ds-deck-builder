@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b25l1e51q6ikg"]
+[gd_scene load_steps=10 format=3 uid="uid://b25l1e51q6ikg"]
 
 [ext_resource type="Script" path="res://EnemyFly.gd" id="1_uey0b"]
 [ext_resource type="PackedScene" uid="uid://dhhhc0afvu644" path="res://hp.tscn" id="2_8ecdr"]
@@ -13,14 +13,27 @@ radius = 0.75
 radius = 0.75
 height = 1.5
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnmtr"]
+albedo_color = Color(0.305882, 1, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_578o4"]
+material = SubResource("StandardMaterial3D_mnmtr")
+radius = 0.75
+height = 1.5
+
 [node name="CharacterBody3D" type="CharacterBody3D"]
 script = ExtResource("1_uey0b")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_difr4")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="regModel" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_g8kwg")
+
+[node name="slowModel" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CapsuleMesh_578o4")
+skeleton = NodePath("../slowTimer")
 
 [node name="HP" parent="." instance=ExtResource("2_8ecdr")]
 maxHP = 1
@@ -38,5 +51,8 @@ stream = ExtResource("4_utb4q")
 [node name="DeathNoise" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_slxfp")
 
+[node name="slowTimer" type="Timer" parent="."]
+
 [connection signal="onDeath" from="HP" to="." method="_on_hp_on_death"]
 [connection signal="timeout" from="AtkCooldown" to="." method="_on_atk_cooldown_timeout"]
+[connection signal="timeout" from="slowTimer" to="." method="_on_slow_timer_timeout"]

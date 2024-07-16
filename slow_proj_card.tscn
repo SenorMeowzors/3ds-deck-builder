@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://ng2m6blpx5wi"]
+
+[ext_resource type="Script" path="res://SlowProj_card.gd" id="1_jmovh"]
+[ext_resource type="Texture2D" uid="uid://d362t370tfhxs" path="res://IceShot.png" id="2_cmrnc"]
+
+[node name="SlowProj_card" type="Node3D"]
+script = ExtResource("1_jmovh")
+sprite = ExtResource("2_cmrnc")
+cardName = "Ice Shot"
+recharge = 0.75
