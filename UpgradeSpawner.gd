@@ -8,7 +8,7 @@ var cloCard
 func spawnUpgrade(x, y, z):
 	var cardType = randi_range(0, cards.size() - 1)
 	var upgrade = template.instantiate()
-	upgrade.heldcard = cards[3]
+	upgrade.heldcard = cards[cardType]
 	upgrade.position = Vector3(x, y + 0.5, z)
 	get_parent().add_child(upgrade)
 	upgrade.inRange.connect(cardInRange)

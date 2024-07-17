@@ -5,6 +5,7 @@
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_17wcj")
+isAtk = false
 sprite = ExtResource("2_vwdje")
 cardName = "Heal"
 fragile = true

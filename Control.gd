@@ -55,3 +55,19 @@ func _on_opa_slider_value_changed(value):
 func _on_sens_slider_value_changed(value):
 	globals.sens = value
 	$PauseMenu/VBoxContainer/sensLabel.set_text("Sensitivity - " + str(globals.sens * 100) + "%")
+
+
+func _on_pc_reloading_a():
+	$Cards/Control.PCreloadA()
+
+
+func _on_pc_reloading_s():
+	$Cards/Control.PCreloadS()
+
+
+func _on_pc_re_ad():
+	$Cards/Control.PCreAD()
+
+
+func _on_pc_re_sd():
+	$Cards/Control.PCreSD()

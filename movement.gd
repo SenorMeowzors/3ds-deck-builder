@@ -3,11 +3,17 @@ extends CharacterBody3D
 var speed = 5.0
 var jump_height = 9
 signal take_dmg
+signal reloadingA
+signal reAD
+signal reloadingS
+signal reSD
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var cameraf = $fpv
 @onready var global = get_node("/root/GlobalVars")
 var Atkdeck = Array()
+var atkDisc = Array()
 var Specdeck = Array()
+var specDisc = Array()
 var hasDashed = false
 var objTarget = Vector3.ZERO
 var objActive = false
@@ -62,13 +68,11 @@ func _physics_process(delta):
 			return
 		if !Atkdeck[0]:
 			return
-		useCard(Atkdeck)
+		useCard(Atkdeck, atkDisc)
 		canShoot = false
-		Atkdeck.append(Atkdeck[0])
-		Atkdeck.remove_at(0)
 	
 	if Input.is_action_just_pressed("cycle_card_atk") and !get_node("../UI").isPaused:
-		Atkdeck.append(Atkdeck[0])
+		atkDisc.append(Atkdeck[0])
 		Atkdeck.remove_at(0)
 	
 	if Input.is_action_just_pressed("use_spec") and !get_node("../UI").isPaused and canSpec:
@@ -76,14 +80,12 @@ func _physics_process(delta):
 			return
 		if !Specdeck[0]:
 			return
-		useCard(Specdeck)
-		Specdeck.append(Specdeck[0])
-		Specdeck.remove_at(0)
+		useCard(Specdeck, specDisc)
 		canSpec = false
 		$specTimer.start(0.5)
 		
 	if Input.is_action_just_pressed("cycle_card_spec") and !get_node("../UI").isPaused and Specdeck.size() > 0:
-		Specdeck.append(Specdeck[0])
+		specDisc.append(Specdeck[0])
 		Specdeck.remove_at(0)
 		
 	if Input.is_action_just_pressed("collect_card") and !get_node("../UI").isPaused:
@@ -115,31 +117,43 @@ func removeCard(deck):
 
 func addCard(Card, Pickup, isAtk):
 	if isAtk:
-		Atkdeck.insert(randi_range(0, Atkdeck.size() - 1), Card.instantiate())
+		Atkdeck.insert(randi_range(0, max(Atkdeck.size() - 1, 0)), Card.instantiate())
 	else:
-		Specdeck.insert(randi_range(0, Specdeck.size() - 1),Card.instantiate())
+		Specdeck.insert(randi_range(0, max(Specdeck.size() - 1, 0)),Card.instantiate())
 	Pickup.queue_free()
 
 func _on_hp_on_death():
-	get_tree().change_scene_to_file("res://node_3d.tscn")
+	get_tree().change_scene_to_file("res://Lvl1.tscn")
 
-func useCard(deck):
+func useCard(deck, disc):
 	var temp = deck[0]
-	if deck == Atkdeck:
-		tilShufAtk += 1
-		$shootTimer.start(temp.recharge)
-		if tilShufAtk > Atkdeck.size():
-			Atkdeck.shuffle()
+	if !temp.has_method("use"):
+		return
+	temp.use(self)
+	if temp.fragile:
+		removeCard(deck)
+		temp.queue_free()
 	else:
-		tilShufSpec += 1
-		$specTimer.start(temp.recharge)
-		if tilShufSpec >= Specdeck.size():
+		disc.append(deck[0])
+		removeCard(deck)
+	if deck == Atkdeck:
+		if Atkdeck.size() <= 0:
+			Atkdeck = atkDisc
+			Atkdeck.shuffle()
+			atkDisc = Array()
+			$shootTimer.start(0.25 * Atkdeck.size())
+			reloadingA.emit()
+		else:
+			$shootTimer.start(temp.recharge)
+	else:
+		if Specdeck.size() <= 0:
+			Specdeck = specDisc
 			Specdeck.shuffle()
-	if temp.has_method("use"):
-		temp.use(self)
-		if temp.fragile:
-			removeCard(deck)
-			temp.queue_free()
+			specDisc = Array()
+			$specTimer.start(0.25 * Specdeck.size())
+			reloadingS.emit()
+		else:
+			$specTimer.start(temp.recharge)
 			
 func _on_hp_take_dmg():
 	$DmgNoise.play()
@@ -153,9 +167,11 @@ func player():
 
 func _on_shoot_timer_timeout():
 	canShoot = true # Replace with function body.
+	reAD.emit()
 
 func _on_spec_timer_timeout():
 	canSpec = true # Replace with function body.
+	reSD.emit()
 
 func take_slow(time):
 	$slowTimer.start(time)

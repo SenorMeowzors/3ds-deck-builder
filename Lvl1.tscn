@@ -248,5 +248,9 @@ script = ExtResource("5_nwwxu")
 [node name="UpgradeSpawner" type="Node3D" parent="."]
 script = ExtResource("6_cd68b")
 
+[connection signal="reAD" from="PC" to="UI" method="_on_pc_re_ad"]
+[connection signal="reSD" from="PC" to="UI" method="_on_pc_re_sd"]
+[connection signal="reloadingA" from="PC" to="UI" method="_on_pc_reloading_a"]
+[connection signal="reloadingS" from="PC" to="UI" method="_on_pc_reloading_s"]
 [connection signal="timeout" from="Timer" to="EnemSpawner" method="_on_timer_timeout"]
 [connection signal="enemDeath" from="EnemSpawner" to="UpgradeSpawner" method="_on_enem_spawner_enem_death"]
