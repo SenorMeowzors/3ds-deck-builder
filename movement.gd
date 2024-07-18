@@ -23,7 +23,7 @@ var tilShufAtk = 0
 var tilShufSpec = 0
 func _ready():
 	if !get_node("/root/GlobalVars").first:
-		Atkdeck = get_node("/root/GlobalVars").Specdeck
+		Atkdeck = get_node("/root/GlobalVars").Atkdeck
 		Atkdeck.shuffle()
 		Specdeck = get_node("/root/GlobalVars").Specdeck
 		Specdeck.shuffle()
@@ -71,10 +71,6 @@ func _physics_process(delta):
 		useCard(Atkdeck, atkDisc)
 		canShoot = false
 	
-	if Input.is_action_just_pressed("cycle_card_atk") and !get_node("../UI").isPaused:
-		atkDisc.append(Atkdeck[0])
-		Atkdeck.remove_at(0)
-	
 	if Input.is_action_just_pressed("use_spec") and !get_node("../UI").isPaused and canSpec:
 		if Specdeck.size() == 0:
 			return
@@ -84,10 +80,6 @@ func _physics_process(delta):
 		canSpec = false
 		$specTimer.start(0.5)
 		
-	if Input.is_action_just_pressed("cycle_card_spec") and !get_node("../UI").isPaused and Specdeck.size() > 0:
-		specDisc.append(Specdeck[0])
-		Specdeck.remove_at(0)
-		
 	if Input.is_action_just_pressed("collect_card") and !get_node("../UI").isPaused:
 		if $"../UpgradeSpawner".cloCard:
 			$"../UpgradeSpawner".cloCard.collect(self)
@@ -96,6 +88,8 @@ func _physics_process(delta):
 	if velocity.y > jump_height:
 		hasDashed = true
 	if abs(velocity.x) > speed or abs(velocity.z) > speed or velocity.y > jump_height:
+		if is_on_floor():
+			velocity /= 1.1
 		velocity /= 1.1
 func _input(event):
 	if event is InputEventMouseMotion and !get_node("../UI").isPaused:
@@ -141,7 +135,7 @@ func useCard(deck, disc):
 			Atkdeck = atkDisc
 			Atkdeck.shuffle()
 			atkDisc = Array()
-			$shootTimer.start(0.25 * Atkdeck.size())
+			$shootTimer.start(max(0.2 * Atkdeck.size(), 0.6))
 			reloadingA.emit()
 		else:
 			$shootTimer.start(temp.recharge)
@@ -150,7 +144,7 @@ func useCard(deck, disc):
 			Specdeck = specDisc
 			Specdeck.shuffle()
 			specDisc = Array()
-			$specTimer.start(0.25 * Specdeck.size())
+			$specTimer.start(max(0.2 * Specdeck.size(), 0.6))
 			reloadingS.emit()
 		else:
 			$specTimer.start(temp.recharge)
