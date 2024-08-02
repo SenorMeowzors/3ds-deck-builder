@@ -24,7 +24,7 @@ func _on_area_3d_body_shape_exited(_body_rid, body, _body_shape_index, _local_sh
 		outRange.emit()
 
 func collect(player):
-	player.addCard(heldcard, self, heldcard.instantiate().isAtk)
+	player.addCard(heldcard, self)
 	
 
 func _process(delta):

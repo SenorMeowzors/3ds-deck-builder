@@ -1,19 +1,16 @@
 extends CharacterBody3D
+class_name player
 
 var speed = 5.0
 var jump_height = 9
 signal take_dmg
-signal reloadingA
-signal reAD
-signal reloadingS
-signal reSD
+signal reloading
+signal relD
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var cameraf = $fpv
 @onready var global = get_node("/root/GlobalVars")
-var Atkdeck = Array()
-var atkDisc = Array()
-var Specdeck = Array()
-var specDisc = Array()
+var deck = Array()
+var disc = Array()
 var hasDashed = false
 var objTarget = Vector3.ZERO
 var objActive = false
@@ -23,14 +20,12 @@ var tilShufAtk = 0
 var tilShufSpec = 0
 func _ready():
 	if !get_node("/root/GlobalVars").first:
-		Atkdeck = get_node("/root/GlobalVars").Atkdeck
-		Atkdeck.shuffle()
-		Specdeck = get_node("/root/GlobalVars").Specdeck
-		Specdeck.shuffle()
+		deck = get_node("/root/GlobalVars").deck
+		deck.shuffle()
 	else:
-		Atkdeck.append(preload("res://default_proj_card.tscn").instantiate())
-		Atkdeck.append(preload("res://default_proj_card.tscn").instantiate())
-		Atkdeck.append(preload("res://default_proj_card.tscn").instantiate())
+		deck.append(preload("res://default_proj_card.tscn").instantiate())
+		deck.append(preload("res://default_proj_card.tscn").instantiate())
+		deck.append(preload("res://default_proj_card.tscn").instantiate())
 
 func _process(_delta):
 	if !get_node("../UI").isPaused:
@@ -64,21 +59,12 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, speed)
 	move_and_slide()
 	if Input.is_action_pressed("use_atk") and !get_node("../UI").isPaused and canShoot:
-		if Atkdeck.size() == 0:
+		if deck.size() == 0:
 			return
-		if !Atkdeck[0]:
+		if !deck[0]:
 			return
-		useCard(Atkdeck, atkDisc)
+		useCard()
 		canShoot = false
-	
-	if Input.is_action_just_pressed("use_spec") and !get_node("../UI").isPaused and canSpec:
-		if Specdeck.size() == 0:
-			return
-		if !Specdeck[0]:
-			return
-		useCard(Specdeck, specDisc)
-		canSpec = false
-		$specTimer.start(0.5)
 		
 	if Input.is_action_just_pressed("collect_card") and !get_node("../UI").isPaused:
 		if $"../UpgradeSpawner".cloCard:
@@ -106,49 +92,36 @@ func attack(Projectile: PackedScene) -> void:
 	get_parent().add_child(atk)
 	
 
-func removeCard(deck):
+func removeCard():
 	deck.remove_at(0)
 
-func addCard(Card, Pickup, isAtk):
-	if isAtk:
-		Atkdeck.insert(randi_range(0, max(Atkdeck.size() - 1, 0)), Card.instantiate())
-	else:
-		Specdeck.insert(randi_range(0, max(Specdeck.size() - 1, 0)),Card.instantiate())
+func addCard(Card, Pickup):
+	deck.insert(randi_range(0, max(deck.size() - 1, 0)),Card.instantiate())
 	Pickup.queue_free()
 
 func _on_hp_on_death():
 	get_tree().change_scene_to_file("res://Lvl1.tscn")
 
-func useCard(deck, disc):
+func useCard():
 	var temp = deck[0]
 	if !temp.has_method("use"):
 		return
 	temp.use(self)
 	if temp.fragile:
-		removeCard(deck)
+		removeCard()
 		temp.queue_free()
 	else:
 		disc.append(deck[0])
-		removeCard(deck)
-	if deck == Atkdeck:
-		if Atkdeck.size() <= 0:
-			Atkdeck = atkDisc
-			Atkdeck.shuffle()
-			atkDisc = Array()
-			$shootTimer.start(max(0.2 * Atkdeck.size(), 0.6))
-			reloadingA.emit()
-		else:
-			$shootTimer.start(temp.recharge)
+		removeCard()
+	if deck.size() <= 0:
+		deck = disc
+		deck.shuffle()
+		disc = Array()
+		$shootTimer.start(max(0.2 * deck.size(), 0.6))
+		reloading.emit()
 	else:
-		if Specdeck.size() <= 0:
-			Specdeck = specDisc
-			Specdeck.shuffle()
-			specDisc = Array()
-			$specTimer.start(max(0.2 * Specdeck.size(), 0.6))
-			reloadingS.emit()
-		else:
-			$specTimer.start(temp.recharge)
-			
+		$shootTimer.start(temp.recharge)
+
 func _on_hp_take_dmg():
 	$DmgNoise.play()
 	take_dmg.emit()
@@ -161,11 +134,7 @@ func player():
 
 func _on_shoot_timer_timeout():
 	canShoot = true # Replace with function body.
-	reAD.emit()
-
-func _on_spec_timer_timeout():
-	canSpec = true # Replace with function body.
-	reSD.emit()
+	relD.emit()
 
 func take_slow(time):
 	$slowTimer.start(time)

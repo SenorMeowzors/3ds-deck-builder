@@ -117,13 +117,6 @@ offset_top = -310.0
 offset_right = -673.0
 texture = ExtResource("6_ufqqv")
 
-[node name="Card2" type="TextureRect" parent="Cards/Control"]
-layout_mode = 2
-offset_left = -448.0
-offset_top = -310.0
-offset_right = -225.0
-texture = ExtResource("6_ufqqv")
-
 [node name="PauseMenu" type="MarginContainer" parent="."]
 visible = false
 layout_mode = 1

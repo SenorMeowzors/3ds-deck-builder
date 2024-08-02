@@ -60,8 +60,9 @@ albedo_texture = ExtResource("4_2rgmw")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ueeyd"]
 albedo_texture = ExtResource("4_2rgmw")
 
-[node name="Lvl1" type="Node3D"]
+[node name="Lvl1" type="Node3D" node_paths=PackedStringArray("PC")]
 script = ExtResource("1_5ppjp")
+PC = NodePath("PC")
 
 [node name="UI" parent="." node_paths=PackedStringArray("PC") instance=ExtResource("2_6phk4")]
 PC = NodePath("../PC")
@@ -248,9 +249,5 @@ script = ExtResource("5_nwwxu")
 [node name="UpgradeSpawner" type="Node3D" parent="."]
 script = ExtResource("6_cd68b")
 
-[connection signal="reAD" from="PC" to="UI" method="_on_pc_re_ad"]
-[connection signal="reSD" from="PC" to="UI" method="_on_pc_re_sd"]
-[connection signal="reloadingA" from="PC" to="UI" method="_on_pc_reloading_a"]
-[connection signal="reloadingS" from="PC" to="UI" method="_on_pc_reloading_s"]
 [connection signal="timeout" from="Timer" to="EnemSpawner" method="_on_timer_timeout"]
 [connection signal="enemDeath" from="EnemSpawner" to="UpgradeSpawner" method="_on_enem_spawner_enem_death"]
