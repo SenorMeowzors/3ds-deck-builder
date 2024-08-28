@@ -2,7 +2,7 @@ extends Node3D
 
 signal entered()
 var player
-
+@export var spawnTo = "res://Lvl2.tscn"
 func _ready():
 	$SpawnNoise.play()
 

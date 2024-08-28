@@ -2,13 +2,16 @@ extends Node3D
 
 @export var enemyList = [preload("res://Enemy.tscn"), preload("res://EnemyFly.tscn")]
 @export var bossList = [preload("res://Boss.tscn")]
-@onready var spawns = get_node("../Spawns").get_children()
+@export var spawn : Node
+@export var currency = 3
+@export var bossLvl = false
 @onready var upgradeSpawner = $"../UpgradeSpawner"
 signal enemDeath
 var deathsTillReward = 0
 var deathsTillBoss = 10
 var won = false
 var bossSpawned = false
+@onready var spawns = spawn.get_children()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	spawn_enem()

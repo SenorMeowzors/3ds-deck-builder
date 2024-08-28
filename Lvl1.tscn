@@ -9,13 +9,13 @@
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_83mae"]
 
-[sub_resource type="Sky" id="Sky_e4oif"]
+[sub_resource type="Sky" id="Sky_85207"]
 sky_material = SubResource("ProceduralSkyMaterial_83mae")
 
 [sub_resource type="Environment" id="Environment_tflw2"]
 background_mode = 2
 background_energy_multiplier = 2.43
-sky = SubResource("Sky_e4oif")
+sky = SubResource("Sky_85207")
 ambient_light_source = 3
 ambient_light_color = Color(1, 0.318399, 0.254096, 1)
 ambient_light_energy = 2.43
@@ -67,8 +67,9 @@ PC = NodePath("PC")
 [node name="UI" parent="." node_paths=PackedStringArray("PC") instance=ExtResource("2_6phk4")]
 PC = NodePath("../PC")
 
-[node name="PC" parent="." instance=ExtResource("3_3wy10")]
+[node name="PC" parent="." node_paths=PackedStringArray("UI") instance=ExtResource("3_3wy10")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+UI = NodePath("../UI")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_tflw2")

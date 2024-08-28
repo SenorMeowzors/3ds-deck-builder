@@ -63,5 +63,3 @@ func _process(delta):
 		if $RayCast3D.is_colliding():
 			grounded = true
 			midHeight = position.y
-
-

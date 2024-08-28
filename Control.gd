@@ -27,11 +27,13 @@ func pauseMenu():
 	if isPaused:
 		Engine.time_scale = 1
 		$PauseMenu.hide()
+		get_node("/root/GlobalVars").isPaused = false
 	else:
 		Engine.time_scale = 0
 		$PauseMenu.show()
 		Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 	isPaused = !isPaused
+	get_node("/root/GlobalVars").isPaused = isPaused
 
 func _on_resume_pressed():
 	pauseMenu()

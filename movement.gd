@@ -9,6 +9,7 @@ signal relD
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var cameraf = $fpv
 @onready var global = get_node("/root/GlobalVars")
+@export var UI : Control
 var deck = Array()
 var disc = Array()
 var hasDashed = false
@@ -19,16 +20,17 @@ var canSpec = true
 var tilShufAtk = 0
 var tilShufSpec = 0
 func _ready():
-	if !get_node("/root/GlobalVars").first:
-		deck = get_node("/root/GlobalVars").deck
+	if !global.first:
+		deck = global.deck
 		deck.shuffle()
 	else:
-		deck.append(preload("res://default_proj_card.tscn").instantiate())
-		deck.append(preload("res://default_proj_card.tscn").instantiate())
-		deck.append(preload("res://default_proj_card.tscn").instantiate())
+		var bolt = preload("res://default_proj_card.tscn")
+		deck.append(bolt.instantiate())
+		deck.append(bolt.instantiate())
+		deck.append(bolt.instantiate())
 
 func _process(_delta):
-	if !get_node("../UI").isPaused:
+	if !UI.isPaused:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _physics_process(delta):
@@ -91,7 +93,6 @@ func attack(Projectile: PackedScene) -> void:
 	atk.maker = self
 	get_parent().add_child(atk)
 	
-
 func removeCard():
 	deck.remove_at(0)
 
@@ -129,9 +130,6 @@ func _on_hp_take_dmg():
 func getHPNode():
 	return $HP
 
-func player():
-	pass
-
 func _on_shoot_timer_timeout():
 	canShoot = true # Replace with function body.
 	relD.emit()
@@ -142,3 +140,6 @@ func take_slow(time):
 
 func _on_slow_timer_timeout():
 	speed *= 2
+
+func player():
+	pass
