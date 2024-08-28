@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var enemyList = [preload("res://Enemy.tscn"), preload("res://EnemyFly.tscn")]
+@export var enemyList = [preload("res://EnemyGround.tscn"), preload("res://EnemyFly.tscn")]
 @export var bossList = [preload("res://Boss.tscn")]
 @export var spawn : Node
 @export var currency = 3

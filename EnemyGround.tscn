@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://ucq1aph8j4pn"]
 
-[ext_resource type="Script" path="res://EnemyGrounded.gd" id="1_q5wo1"]
+[ext_resource type="Script" path="res://EnemyGround.gd" id="1_q5wo1"]
 [ext_resource type="PackedScene" uid="uid://dhhhc0afvu644" path="res://hp.tscn" id="2_u053j"]
 [ext_resource type="AudioStream" uid="uid://b1lg1rttp22k3" path="res://RPG_Essentials_Free/8_Atk_Magic_SFX/04_Fire_explosion_04_medium.wav" id="3_8dyab"]
 [ext_resource type="AudioStream" uid="uid://ttpgv7k4fefi" path="res://RPG_Essentials_Free/10_Battle_SFX/22_Slash_04.wav" id="4_pq25v"]

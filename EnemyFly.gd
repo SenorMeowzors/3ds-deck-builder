@@ -8,7 +8,7 @@ var targetPos = Vector3.ZERO
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var canAttack = true
 var projectile = preload("res://projectile.tscn")
-var isSlow = false
+var isSlow = false 
 @onready var atkCD = $AtkCooldown
 signal onDeath(x, y, z)
 
