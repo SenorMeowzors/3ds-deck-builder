@@ -4,12 +4,14 @@ extends Control
 var reloading = false
 
 func _process(_delta):
-	$Card.set_texture(null)
-	if PC.deck.size() <= 0:
+	$lCard.set_texture(null)
+	if !PC.leftHand:
 		return
-	$Card.set_texture(PC.deck[0].sprite)
-	if reloading:
-		$Card.set_texture(preload("res://reload.png"))
+	$lCard.set_texture(PC.leftHand.sprite)
+	$rCard.set_texture(null)
+	if !PC.rightHand:
+		return
+	$rCard.set_texture(PC.rightHand.sprite)
 
 func PCreload():
 	reloading = true

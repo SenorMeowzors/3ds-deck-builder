@@ -59,7 +59,7 @@ func attack(Projectile: PackedScene) -> void:
 		
 func _on_hp_on_death():
 	$DeathNoise.play()
-	onDeath.emit(position.x, position.y, position.z)
+	onDeath.emit(position)
 	queue_free() # Replace with function body.
 
 func take_slow(time):

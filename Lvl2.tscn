@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://bpmldd8ek0n4a"]
+[gd_scene load_steps=14 format=3 uid="uid://bpmldd8ek0n4a"]
 
 [ext_resource type="Script" path="res://Pause.gd" id="1_33v6y"]
 [ext_resource type="PackedScene" uid="uid://evn2lqlfdcgv" path="res://UI.tscn" id="2_h1feq"]
 [ext_resource type="PackedScene" uid="uid://cof1cf5gtmex" path="res://PlayerCharacter.tscn" id="3_bu26v"]
 [ext_resource type="Script" path="res://EnemSpawner.gd" id="4_8rqua"]
 [ext_resource type="Script" path="res://UpgradeSpawner.gd" id="5_bjwkd"]
+[ext_resource type="PackedScene" uid="uid://ucq1aph8j4pn" path="res://EnemyGround.tscn" id="5_e6i44"]
 [ext_resource type="Texture2D" uid="uid://y7xjilw34h2p" path="res://Free_pixel_tiles_pack/dirty_3.png" id="6_3duuo"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_eyht1"]
@@ -24,6 +25,8 @@ reflected_light_source = 2
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ip7n7"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_syasx"]
+vertices = PackedVector3Array(-11.75, 0.5, -11.75, -11.75, 0.5, 11.75, 62, 0.5, 11.75, 62, 0.5, -11.75)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2nabm"]
 albedo_texture = ExtResource("6_3duuo")
@@ -36,7 +39,7 @@ PC = NodePath("PC")
 PC = NodePath("../PC")
 
 [node name="PC" parent="." node_paths=PackedStringArray("UI") instance=ExtResource("3_bu26v")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.501, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.7348, 1.501, 0)
 UI = NodePath("../UI")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -49,6 +52,12 @@ transform = Transform3D(1, 0, 0, 0, 0.263385, 0.964691, 0, -0.964691, 0.263385, 
 [node name="EnemSpawner" type="Node3D" parent="." node_paths=PackedStringArray("spawn")]
 script = ExtResource("4_8rqua")
 spawn = NodePath("../Spawns")
+prePlaced = true
+curEnems = 1
+
+[node name="CharacterBody3D" parent="EnemSpawner" node_paths=PackedStringArray("target") instance=ExtResource("5_e6i44")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.89343, 0)
+target = NodePath("../../PC")
 
 [node name="UpgradeSpawner" type="Node3D" parent="."]
 script = ExtResource("5_bjwkd")
@@ -56,12 +65,48 @@ script = ExtResource("5_bjwkd")
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_syasx")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="NavigationRegion3D"]
 use_collision = true
-size = Vector3(25, 1, 25)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.5, 0)
+use_collision = true
+flip_faces = true
+size = Vector3(25, 25, 25)
+material = SubResource("StandardMaterial3D_2nabm")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 12.5, 0)
+use_collision = true
+flip_faces = true
+size = Vector3(25, 25, 25)
+material = SubResource("StandardMaterial3D_2nabm")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 12.5, 0)
+use_collision = true
+flip_faces = true
+size = Vector3(25, 25, 25)
 material = SubResource("StandardMaterial3D_2nabm")
 
 [node name="Spawns" type="Node" parent="."]
 
 [node name="Node3D" type="Node3D" parent="Spawns"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.30798, 1.77802, -4.63412)
+
+[node name="Node3D4" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.77277, 1.77802, -4.63412)
+
+[node name="Node3D5" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.77277, 1.77802, 6.09743)
+
+[node name="Node3D6" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63467, 1.77802, -0.167407)
+
+[node name="Node3D2" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.30798, 2.04224, 4.38033)
+
+[node name="Node3D3" type="Node3D" parent="Spawns"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.83054, 2.36682, 0.0687861)
+
+[connection signal="onDeath" from="EnemSpawner/CharacterBody3D" to="EnemSpawner" method="on_enem_death"]

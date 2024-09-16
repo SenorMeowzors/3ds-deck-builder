@@ -12,6 +12,8 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @export var UI : Control
 var deck = Array()
 var disc = Array()
+var leftHand
+var rightHand
 var hasDashed = false
 var objTarget = Vector3.ZERO
 var objActive = false
@@ -28,6 +30,10 @@ func _ready():
 		deck.append(bolt.instantiate())
 		deck.append(bolt.instantiate())
 		deck.append(bolt.instantiate())
+	leftHand = deck[0]
+	deck.remove_at(0)
+	rightHand = deck[0]
+	deck.remove_at(0)
 
 func _process(_delta):
 	if !UI.isPaused:
@@ -61,11 +67,15 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, speed)
 	move_and_slide()
 	if Input.is_action_pressed("use_atk") and !get_node("../UI").isPaused and canShoot:
-		if deck.size() == 0:
+		if !leftHand:
 			return
-		if !deck[0]:
+		useCard(leftHand)
+		canShoot = false
+	
+	if Input.is_action_pressed("use_spec") and !get_node("../UI").isPaused and canShoot:
+		if !rightHand:
 			return
-		useCard()
+		useCard(rightHand)
 		canShoot = false
 		
 	if Input.is_action_just_pressed("collect_card") and !get_node("../UI").isPaused:
@@ -92,9 +102,6 @@ func attack(Projectile: PackedScene) -> void:
 	atk.set_dir(-cameraf.get_global_transform().basis.z, true)
 	atk.maker = self
 	get_parent().add_child(atk)
-	
-func removeCard():
-	deck.remove_at(0)
 
 func addCard(Card, Pickup):
 	deck.insert(randi_range(0, max(deck.size() - 1, 0)),Card.instantiate())
@@ -103,17 +110,18 @@ func addCard(Card, Pickup):
 func _on_hp_on_death():
 	get_tree().change_scene_to_file("res://Lvl1.tscn")
 
-func useCard():
-	var temp = deck[0]
-	if !temp.has_method("use"):
+func useCard(x):
+	if !x.has_method("use"):
 		return
-	temp.use(self)
-	if temp.fragile:
-		removeCard()
-		temp.queue_free()
+	x.use(self)
+	if x.fragile:
+		x = deck[0]
+		deck.remove_at(0)
+		x.queue_free()
 	else:
-		disc.append(deck[0])
-		removeCard()
+		disc.append(x)
+		x = deck[0]
+		deck.remove_at(0)
 	if deck.size() <= 0:
 		deck = disc
 		deck.shuffle()
@@ -121,7 +129,7 @@ func useCard():
 		$shootTimer.start(max(0.2 * deck.size(), 0.6))
 		reloading.emit()
 	else:
-		$shootTimer.start(temp.recharge)
+		$shootTimer.start(x.recharge)
 
 func _on_hp_take_dmg():
 	$DmgNoise.play()

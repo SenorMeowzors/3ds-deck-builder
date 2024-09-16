@@ -10,5 +10,5 @@ var isPaused = false
 func addScore(points):
 	score += points
 
-func saveDeck(Deck):
-	deck = Deck
+func saveDeck(Deck, Discard):
+	deck = Deck + Discard

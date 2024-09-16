@@ -1,4 +1,4 @@
 extends CharacterBody3D
 class_name Enemy
 
-var cost = 1
+@export var cost = 1

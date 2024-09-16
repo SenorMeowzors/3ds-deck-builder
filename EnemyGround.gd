@@ -47,7 +47,7 @@ func attack(Projectile: PackedScene) -> void:
 	get_parent().add_child(atk)
 		
 func _on_hp_on_death():
-	onDeath.emit(position.x, position.y, position.z)
+	onDeath.emit(position)
 	queue_free() # Replace with function body.
 
 func take_slow(time):

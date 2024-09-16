@@ -5,11 +5,12 @@ var template = load("res://card_pickup.tscn")
 @onready var UI = $"../UI"
 var cloCard
 
-func spawnUpgrade(x, y, z):
+func spawnUpgrade(pos: Vector3 ):
 	var cardType = randi_range(0, cards.size() - 1)
 	var upgrade = template.instantiate()
 	upgrade.heldcard = cards[cardType]
-	upgrade.position = Vector3(x, y + 0.5, z)
+	upgrade.position = pos
+	upgrade.position.y += 0.5
 	get_parent().add_child(upgrade)
 	upgrade.inRange.connect(cardInRange)
 	upgrade.outRange.connect(cardOutRange)

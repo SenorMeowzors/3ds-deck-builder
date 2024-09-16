@@ -21,6 +21,8 @@ func spawnEnd():
 	
 
 func start_next_lvl():
-	get_node("/root/GlobalVars").saveDeck(PC.deck)
+	PC.deck.append(PC.leftHand) 
+	PC.deck.append(PC.rightHand)
+	get_node("/root/GlobalVars").saveDeck(PC.deck, PC.disc)
 	get_node("/root/GlobalVars").first = false
 	get_tree().change_scene_to_file("res://Lvl2.tscn")

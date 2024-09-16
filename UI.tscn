@@ -110,11 +110,19 @@ scale = Vector2(0.75, 0.75)
 layout_mode = 2
 script = ExtResource("4_srtr2")
 
-[node name="Card" type="TextureRect" parent="Cards/Control"]
+[node name="lCard" type="TextureRect" parent="Cards/Control"]
 layout_mode = 2
 offset_left = -896.0
 offset_top = -310.0
 offset_right = -673.0
+texture = ExtResource("6_ufqqv")
+
+[node name="rCard" type="TextureRect" parent="Cards/Control"]
+layout_mode = 2
+offset_left = -333.333
+offset_top = -309.333
+offset_right = -110.333
+offset_bottom = 0.666656
 texture = ExtResource("6_ufqqv")
 
 [node name="PauseMenu" type="MarginContainer" parent="."]
