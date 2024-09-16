@@ -8,19 +8,20 @@ extends Node3D
 @export var survival = false
 @export var prePlaced = false
 @export var minEnems = 2
-@onready var upgradeSpawner = $"../UpgradeSpawner"
+@export var upgradeSpawner : Node3D
 signal enemDeath
 var deathsTillReward = 0
 var deathsTillBoss = 10
 var won = false
 var bossSpawned = false
+var spawnedAt = Array()
 @export var curEnems = 0
 @onready var spawns = spawn.get_children()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if prePlaced:
 		return
-	while currency >= 0:
+	while currency > 0:
 		spawn_enem()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -31,8 +32,13 @@ func spawn_enem():
 	var ran = randi_range(0, enemyList.size() - 1)
 	if enemyList[ran].instantiate().cost > currency - minEnems + 1 + curEnems:
 		return
+	var ranP = randi()
+	if spawns[(ranP % spawns.size())].position in spawnedAt: 
+		return
+	else: 
+		spawnedAt.append(spawns[(ranP % spawns.size())].position)
 	var enem = enemyList[ran].instantiate()
-	enem.position = spawns[(randi() % spawns.size())].position
+	enem.position = spawns[(ranP % spawns.size())].position
 	enem.target = $"../PC"
 	enem.onDeath.connect(on_enem_death)
 	add_child(enem)

@@ -69,14 +69,46 @@ func _physics_process(delta):
 	if Input.is_action_pressed("use_atk") and !get_node("../UI").isPaused and canShoot:
 		if !leftHand:
 			return
-		useCard(leftHand)
 		canShoot = false
+		if !leftHand.has_method("use"):
+			return
+		leftHand.use(self)
+		if leftHand.fragile:
+			leftHand.queue_free()
+		else:
+			disc.append(leftHand)
+		if deck.size() <= 0:
+			deck = disc
+			deck.shuffle()
+			disc = Array()
+			$shootTimer.start(max(0.2 * deck.size(), 0.6))
+			reloading.emit()
+		else:
+			$shootTimer.start(leftHand.recharge)
+		leftHand = deck[0]
+		deck.remove_at(0)
 	
 	if Input.is_action_pressed("use_spec") and !get_node("../UI").isPaused and canShoot:
 		if !rightHand:
 			return
-		useCard(rightHand)
 		canShoot = false
+		if !rightHand.has_method("use"):
+			return
+		rightHand.use(self)
+		if rightHand.fragile:
+			rightHand.queue_free()
+		else:
+			disc.append(rightHand)
+		if deck.size() <= 0:
+			deck = disc
+			deck.shuffle()
+			disc = Array()
+			$shootTimer.start(max(0.2 * deck.size(), 0.6))
+			reloading.emit()
+		else:
+			$shootTimer.start(rightHand.recharge)
+		rightHand = deck[0]
+		deck.remove_at(0)
 		
 	if Input.is_action_just_pressed("collect_card") and !get_node("../UI").isPaused:
 		if $"../UpgradeSpawner".cloCard:
@@ -109,27 +141,6 @@ func addCard(Card, Pickup):
 
 func _on_hp_on_death():
 	get_tree().change_scene_to_file("res://Lvl1.tscn")
-
-func useCard(x):
-	if !x.has_method("use"):
-		return
-	x.use(self)
-	if x.fragile:
-		x = deck[0]
-		deck.remove_at(0)
-		x.queue_free()
-	else:
-		disc.append(x)
-		x = deck[0]
-		deck.remove_at(0)
-	if deck.size() <= 0:
-		deck = disc
-		deck.shuffle()
-		disc = Array()
-		$shootTimer.start(max(0.2 * deck.size(), 0.6))
-		reloading.emit()
-	else:
-		$shootTimer.start(x.recharge)
 
 func _on_hp_take_dmg():
 	$DmgNoise.play()

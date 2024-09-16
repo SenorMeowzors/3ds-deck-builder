@@ -49,10 +49,11 @@ camera_attributes = SubResource("CameraAttributesPractical_ip7n7")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.263385, 0.964691, 0, -0.964691, 0.263385, 0, 18.2122, 8.18105)
 
-[node name="EnemSpawner" type="Node3D" parent="." node_paths=PackedStringArray("spawn")]
+[node name="EnemSpawner" type="Node3D" parent="." node_paths=PackedStringArray("spawn", "upgradeSpawner")]
 script = ExtResource("4_8rqua")
 spawn = NodePath("../Spawns")
 prePlaced = true
+upgradeSpawner = NodePath("../UpgradeSpawner")
 curEnems = 1
 
 [node name="CharacterBody3D" parent="EnemSpawner" node_paths=PackedStringArray("target") instance=ExtResource("5_e6i44")]
