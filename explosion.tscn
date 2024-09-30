@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://b1uxsamf872qr"]
+
+[ext_resource type="Script" path="res://explosion.gd" id="1_kglsg"]
+[ext_resource type="Texture2D" uid="uid://dqj6iapirjnh8" path="res://Free_pixel_tiles_pack/cobblestone_1.png" id="2_1qiju"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ushvs"]
+radius = 0.001
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0msb5"]
+albedo_texture = ExtResource("2_1qiju")
+
+[node name="Explosion" type="Node3D"]
+script = ExtResource("1_kglsg")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_ushvs")
+
+[node name="CSGTorus3D" type="CSGTorus3D" parent="."]
+material = SubResource("StandardMaterial3D_0msb5")
+
+[connection signal="body_shape_entered" from="Area3D" to="." method="_on_area_3d_body_shape_entered"]

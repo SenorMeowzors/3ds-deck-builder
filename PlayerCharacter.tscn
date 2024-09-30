@@ -26,7 +26,7 @@ shape = SubResource("CapsuleShape3D_q2c65")
 mesh = SubResource("CapsuleMesh_tis65")
 
 [node name="fpv" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.997934, -0.0642537, 0, 0.0642537, 0.997934, 0.001, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.001, 0, 0)
 current = true
 
 [node name="HP" parent="." instance=ExtResource("2_cschx")]

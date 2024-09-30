@@ -89,6 +89,9 @@ func _physics_process(delta):
 		deck.remove_at(0)
 	
 	if Input.is_action_pressed("use_spec") and !get_node("../UI").isPaused and canShoot:
+		var a = preload("res://explosion.tscn").instantiate()
+		a.maker = self
+		add_child(a)
 		if !rightHand:
 			return
 		canShoot = false
