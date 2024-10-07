@@ -26,7 +26,7 @@ func _physics_process(delta):
 		return
 	if position.distance_to(target.global_position) < 25:
 		if position.distance_to(target.global_position) < 10:
-			nav.set_target_position(Vector3(randi(), 0, randi()))
+			nav.set_target_position(Vector3(randi(), position.y, randi()))
 		if canAttack:
 			atkCD.start()
 			attack(projectile)

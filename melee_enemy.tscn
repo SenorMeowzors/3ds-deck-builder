@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://cl4bwla3f8sor"]
+
+[ext_resource type="Script" path="res://melee_enemy.gd" id="1_m6qff"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g2cnp"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_p5jmy"]
+
+[sub_resource type="Animation" id="Animation_i4drl"]
+resource_name = "attack"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qky3n"]
+_data = {
+"attack": SubResource("Animation_i4drl")
+}
+
+[node name="MeleeEnemy" type="CharacterBody3D"]
+script = ExtResource("1_m6qff")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_g2cnp")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_p5jmy")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qky3n")
+}
+
+[node name="AtkCooldown" type="Timer" parent="."]
+
+[node name="Hitbox" type="Area3D" parent="."]

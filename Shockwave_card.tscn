@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ia0x7gxjy8kb"]
+
+[ext_resource type="Script" path="res://shockwave_card.gd" id="1_t4nol"]
+[ext_resource type="Texture2D" uid="uid://dni84t5riipu3" path="res://earthquake__s206__cn95_lnen.jpg" id="2_4cpch"]
+
+[node name="Shockwave_card" type="Node3D"]
+script = ExtResource("1_t4nol")
+sprite = ExtResource("2_4cpch")
+cardName = "Shockwave"

@@ -4,37 +4,39 @@ var speed = 5.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 @export var target := Node3D
-var targetPos = Vector3.ZERO
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var canAttack = true
-var projectile = preload("res://projectile.tscn")
-var isSlow = false 
+var isSlow = false
+@onready var nav = $navigator
 @onready var atkCD = $AtkCooldown
 signal onDeath(x, y, z)
 
 func _ready():
 	$SpawnNoise.play()
+	$slowModel.set_visible(false)
 
 func _physics_process(delta):
+	# Add the gravity.
+	if not is_on_floor():
+		velocity.y -= gravity * delta
 	var direction = Vector3.ZERO
 	move_and_slide()
 	if !target:
 		return
-	if position.distance_to(target.global_position) < 35:
-		if position.distance_to(target.global_position) < 20:
-			targetPos = Vector3(randi(), position.y, randi())
+	if position.distance_to(target.global_position) < 2:
+		if position.distance_to(target.global_position) < 1:
+			nav.set_target_position(Vector3(randi(), position.y, randi()))
 		if canAttack:
 			atkCD.start()
-			attack(projectile)
+			$AnimationPlayer.play("attack")
 			canAttack = false
 	else:
-		targetPos = target.global_position
-	direction = (targetPos - global_position).normalized()
-	if global_position.y < 10:
-		direction.y += 1
+		nav.set_target_position(target.global_position)
+	direction = (nav.get_next_path_position() - global_position).normalized()
 	velocity = velocity.lerp(direction * speed, delta)
 	if isSlow:
 		velocity = velocity.lerp(direction * speed * 0.5, delta)
+	
 func attack(Projectile: PackedScene) -> void:
 	$AtkNoise.play()
 	var atk = Projectile.instantiate()
@@ -44,7 +46,6 @@ func attack(Projectile: PackedScene) -> void:
 	get_parent().add_child(atk)
 		
 func _on_hp_on_death():
-	$DeathNoise.play()
 	onDeath.emit(position)
 	queue_free() # Replace with function body.
 

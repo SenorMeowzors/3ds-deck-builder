@@ -1,6 +1,6 @@
 extends Node3D
 
-var cards = [load("res://dash_card.tscn"), load("res://charge_proj_card.tscn"), load("res://heal_card.tscn"), load("res://slow_proj_card.tscn")]
+var cards = [load("res://dash_card.tscn"), load("res://charge_proj_card.tscn"), load("res://heal_card.tscn"), load("res://slow_proj_card.tscn"), load("res://Shockwave_card.tscn")]
 var template = load("res://card_pickup.tscn")
 @onready var UI = $"../UI"
 var cloCard

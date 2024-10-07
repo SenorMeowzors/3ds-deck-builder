@@ -70,24 +70,24 @@ navigation_mesh = SubResource("NavigationMesh_syasx")
 use_collision = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.5, 0)
 use_collision = true
 flip_faces = true
-size = Vector3(25, 25, 25)
+size = Vector3(25, 15, 25)
 material = SubResource("StandardMaterial3D_2nabm")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 12.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25, 7.5, 0)
 use_collision = true
 flip_faces = true
-size = Vector3(25, 25, 25)
+size = Vector3(25, 15, 25)
 material = SubResource("StandardMaterial3D_2nabm")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="NavigationRegion3D/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 12.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 50, 7.5, 0)
 use_collision = true
 flip_faces = true
-size = Vector3(25, 25, 25)
+size = Vector3(25, 15, 25)
 material = SubResource("StandardMaterial3D_2nabm")
 
 [node name="Spawns" type="Node" parent="."]
